@@ -1,0 +1,98 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Annual CO2 Emissions by Region",
+    "width": 800,
+    "height": 400,
+    "background": "white",
+    "layer": [
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/faw01/FIT3179-Homework-Assessment-Vega-Lite-Interactive/main/Homework%20Assessment%2010/annual-co-emissions-by-region.csv",
+          "format": {"type": "csv"}
+        },
+        "transform": [
+          {"filter": "datum.Entity !== 'World'"}
+        ],
+        "mark": {
+          "type": "area",
+          "opacity": 0.5
+        },
+        "encoding": {
+          "x": {
+            "field": "Year",
+            "type": "temporal",
+            "axis": {"title": "Year", "format": "%Y"}
+          },
+          "y": {
+            "field": "Annual CO2 emissions",
+            "type": "quantitative",
+            "axis": {"title": "Annual CO2 Emissions"}
+          },
+          "color": {
+            "field": "Entity",
+            "type": "nominal",
+            "legend": {"title": "Region"},
+            "scale": {"scheme": "tableau10"}
+          },
+          "opacity": {
+            "condition": {"selection": "RegionSelect", "value": 1},
+            "value": 0
+          },
+          "tooltip": [
+            {"field": "Year", "type": "temporal", "title": "Year", "timeUnit": "year"},
+            {"field": "Entity", "type": "nominal", "title": "Region"},
+            {"field": "Annual CO2 emissions", "type": "quantitative", "title": "Annual CO2 Emissions (in tonnes)", "format": ",.0f"}
+          ]
+        },
+        "selection": {
+          "RegionSelect": {
+            "type": "single",
+            "fields": ["Entity"],
+            "bind": {
+              "Entity": {
+                "input": "select",
+                "options": [null, "Africa", "Asia", "Europe", "North America", "Oceania", "South America"],
+                "name": "Region "
+              }
+            }
+          }
+        }
+      },
+      {
+        "data": {
+          "url": "https://raw.githubusercontent.com/faw01/FIT3179-Homework-Assessment-Vega-Lite-Interactive/main/Homework%20Assessment%2010/annual-co-emissions-by-region.csv",
+          "format": {"type": "csv"}
+        },
+        "transform": [
+          {"filter": "datum.Entity !== 'World'"}
+        ],
+        "mark": "point",
+        "selection": {
+          "hover": {"type": "single", "nearest": true, "on": "mouseover", "encodings": ["x"], "empty": "none", "clear": "mouseout"}
+        },
+        "encoding": {
+          "x": {
+            "field": "Year",
+            "type": "temporal",
+            "axis": {"title": "Year", "format": "%Y"}
+          },
+          "y": {
+            "field": "Annual CO2 emissions",
+            "type": "quantitative",
+            "axis": {"title": "Annual CO2 Emissions"}
+          },
+          "color": {
+            "field": "Entity",
+            "type": "nominal",
+            "legend": {"title": "Region"},
+            "scale": {"scheme": "tableau10"}
+          },
+          "opacity": {
+            "condition": {"selection": "hover", "value": 1},
+            "value": 0
+          }
+        }
+      }
+    ]
+  }
+  
