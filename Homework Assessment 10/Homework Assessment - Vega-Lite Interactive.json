@@ -59,7 +59,7 @@
         }
       },
       {
-        "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -230, "dy": -250},
+        "mark": {"type": "text", "font": "Helvetica", "fontSize": "18", "align": "left", "baseline": "middle", "dx": -375, "dy": -250},
         "encoding": {
           "x": { "datum": { "year": 1947 }, "type": "temporal" },
           "y": {"datum": 450, "type": "quantitative"},
@@ -73,7 +73,7 @@
         }
       },
       {
-        "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -160, "dy": -250},
+        "mark": {"type": "text", "font": "Helvetica", "fontSize": "18",  "align": "left", "baseline": "middle", "dx": -255, "dy": -250},
         "encoding": {
           "x": { "datum": { "year": 2016 }, "type": "temporal" },
           "y": {"datum": 450, "type": "quantitative"},

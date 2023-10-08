@@ -73,85 +73,88 @@
     };
 
     var spec2 = {
-      "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-      "title": "Annual CO2 Emissions by Region",
-      "width": 800,
-      "height": 400,
-      "background": "white",
-      "data": {
-        "url": "https://raw.githubusercontent.com/faw01/FIT3179-Homework-Assessment-Vega-Lite-Interactive/main/Homework%20Assessment%2010/annual-co-emissions-by-region.csv"
-      },
-      "transform": [
-        {"filter": "datum.Entity === 'Africa' || datum.Entity === 'Asia' || datum.Entity === 'Europe' || datum.Entity === 'North America' || datum.Entity === 'Oceania' || datum.Entity === 'South America'"}
-      ],
-      "layer": [
-        {
-          "mark": {"type": "line"},
-          "encoding": {
-            "x": {
-              "field": "Year",
-              "type": "temporal",
-              "axis": {"title": "Year", "format": "%Y"},
-              "scale": {"domain": [{"year": 1850}, {"year": 2022}]}
+        "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+        "title": "Annual CO2 Emissions by Region",
+        "width": 800,
+        "height": 400,
+        "background": "white",
+        
+        "data": {
+          "url": "https://raw.githubusercontent.com/faw01/FIT3179-Homework-Assessment-Vega-Lite-Interactive/main/Homework%20Assessment%2010/annual-co-emissions-by-region.csv"
+        },
+        
+        "transform": [
+          {"filter": "datum.Entity === 'Africa' || datum.Entity === 'Asia' || datum.Entity === 'Europe' || datum.Entity === 'North America' || datum.Entity === 'Oceania' || datum.Entity === 'South America'"}
+        ],
+        
+        "layer": [
+          {
+            "mark": {"type": "line"},
+            "encoding": {
+              "x": {
+                "field": "Year",
+                "type": "temporal",
+                "axis": {"title": "Year", "format": "%Y"},
+                "scale": {"domain": [{"year": 1850}, {"year": 2022}]}
+              },
+              "y": {
+                "field": "Annual CO2 emissions",
+                "type": "quantitative",
+                "axis": {"title": "Annual CO2 Emissions (in tonnes)"}
+              },
+              "color": {
+                "field": "Entity",
+                "type": "nominal",
+                "legend": {"title": "Region"},
+                "scale": {"scheme": "tableau10"}
+              },
+              "tooltip": [
+                {"field": "Year", "type": "temporal", "title": "Year", "timeUnit": "year"},
+                {"field": "Entity", "type": "nominal", "title": "Region"},
+                {"field": "Annual CO2 emissions", "type": "quantitative", "title": "Annual CO2 Emissions (tonnes)", "format": ",.0f"}
+              ]
             },
-            "y": {
-              "field": "Annual CO2 emissions",
-              "type": "quantitative",
-              "axis": {"title": "Annual CO2 Emissions (in tonnes)"}
+            "selection": {
+              "RegionSelect": {
+                "type": "multi",
+                "fields": ["Entity"],
+                "bind": "legend",
+                "init": {"Entity": ["North America", "South America", "Europe", "Asia", "Africa", "Oceania"]}
+              }
             },
-            "color": {
-              "field": "Entity",
-              "type": "nominal",
-              "legend": {"title": "Region"},
-              "scale": {"scheme": "tableau10"}
-            },
-            "tooltip": [
-              {"field": "Year", "type": "temporal", "title": "Year", "timeUnit": "year"},
-              {"field": "Entity", "type": "nominal", "title": "Region"},
-              {"field": "Annual CO2 emissions", "type": "quantitative", "title": "Annual CO2 Emissions (tonnes)", "format": ",.0f"}
+            "transform": [
+              {"filter": {"selection": "RegionSelect"}}
             ]
           },
-          "selection": {
-            "RegionSelect": {
-              "type": "multi",
-              "fields": ["Entity"],
-              "bind": "legend",
-              "init": {"Entity": ["North America", "South America", "Europe", "Asia", "Africa", "Oceania"]}
+          {
+            "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4]},
+            "encoding": {
+              "x": { "datum": { "year": 1947 }, "type": "temporal" }
             }
           },
-          "transform": [
-            {"filter": {"selection": "RegionSelect"}}
-          ]
-        },
-        {
-          "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4]},
-          "encoding": {
-            "x": { "datum": { "year": 1947 }, "type": "temporal" }
-          }
-        },
-        {
-          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -230, "dy": -250},
-          "encoding": {
-            "x": { "datum": { "year": 1947 }, "type": "temporal" },
-            "y": {"datum": 450, "type": "quantitative"},
-            "text": {"value": "1947 - Start of the Third Industrial Revolution"}
-          }
-        },
-        {
-          "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4]},
-          "encoding": {
-            "x": { "datum": { "year": 2016 }, "type": "temporal" }
-          }
-        },
-        {
-          "mark": {"type": "text", "align": "left", "baseline": "middle", "dx": -160, "dy": -250},
-          "encoding": {
-            "x": { "datum": { "year": 2016 }, "type": "temporal" },
-            "y": {"datum": 450, "type": "quantitative"},
-            "text": {"value": "2016 - Paris Agreement Signed"}
-          }
-        }      
-      ]
+          {
+            "mark": {"type": "text", "font": "Helvetica", "fontSize": "18", "align": "left", "baseline": "middle", "dx": -375, "dy": -250},
+            "encoding": {
+              "x": { "datum": { "year": 1947 }, "type": "temporal" },
+              "y": {"datum": 450, "type": "quantitative"},
+              "text": {"value": "1947 - Start of the Third Industrial Revolution"}
+            }
+          },
+          {
+            "mark": {"type": "rule", "color": "black", "strokeDash": [4, 4]},
+            "encoding": {
+              "x": { "datum": { "year": 2016 }, "type": "temporal" }
+            }
+          },
+          {
+            "mark": {"type": "text", "font": "Helvetica", "fontSize": "18",  "align": "left", "baseline": "middle", "dx": -255, "dy": -250},
+            "encoding": {
+              "x": { "datum": { "year": 2016 }, "type": "temporal" },
+              "y": {"datum": 450, "type": "quantitative"},
+              "text": {"value": "2016 - Paris Agreement Signed"}
+            }
+          }      
+        ]
     };
 
     vegaEmbed("#vis1", spec1, {mode: "vega-lite"}).then(console.log).catch(console.warn);
